@@ -13,11 +13,8 @@ router.get('/', async (req, res) => {
 });
 
 router.post('/create', async (req, res) => {
-  const { title } = req.body
-  console.log(title);
-
+  const { title  , image } = req.body
   const category = await Category.findOne({ title: title });
-
   if (category) {
       return res.status(401).json({
           success: false,
@@ -25,7 +22,7 @@ router.post('/create', async (req, res) => {
       })
   }
 
-  const new_cat = await Category.create({ title });
+  const new_cat = await Category.create({ title ,image});
 
   res.status(201).json({
       success: true,
@@ -34,6 +31,7 @@ router.post('/create', async (req, res) => {
   })
 
 });
+
 router.put('/:id',  async (req, res) => {
   let category = await Category.findById(req.params.id);
 
