@@ -28,8 +28,6 @@
   },
   "scripts": {
     "start": "nodemon --watch backend --exec babel-node server.js",
-    "build": "rm -rf dist && npm install && npm run build",
-    "heroku-postbuild-x": "npm run build && npm install && npm run build"
   },
   "repository": {
     "type": "git",
