@@ -68,7 +68,7 @@ router.post('/register', async (req, res) => {
       }
     );
   } else {
-    res.status(401).json({ success : false,  message: 'Invalid User Data.' });
+    res.state(201).json({ success : false,  message: 'Invalid User Data.' });
   }
 });
 
