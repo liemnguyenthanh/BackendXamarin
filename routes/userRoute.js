@@ -33,8 +33,8 @@ router.post('/signin', async (req, res) => {
 
   if (signinUser) {
     res.status(201).json({
-      success : true ,
-      data : {
+      success: true,
+      data: {
         _id: signinUser.id,
         name: signinUser.name,
         username: signinUser.username,
@@ -43,33 +43,39 @@ router.post('/signin', async (req, res) => {
       }
     });
   } else {
-    res.status(401).json({ success : false ,message: 'Invalid username or Password.' });
+    res.status(401).json({ success: false, message: 'Invalid username or Password.' });
   }
 });
 
 router.post('/register', async (req, res) => {
-  const user = new User({
-    name: req.body.name,
-    username: req.body.username,
-    password: req.body.password,
-  });
-  const newUser = await user.save();
-  if (newUser) {
-    res.state(201).json(
-      {
-        success : true ,
-        data : {
-          _id: newUser.id,
-          name: newUser.name,
-          username: newUser.username,
-          isAdmin: newUser.isAdmin,
-          token: getToken(newUser),
+  const { name, username, password } = req.body
+  const checkUser = await User.findOne({ username: username });
+    console.log(checkUser);
+    if (checkUser == null) {
+    const user = new User({
+      name: name,
+      username: username,
+      password: password,
+    })
+    const newUser = await user.save();
+    console.log(newUser);
+    if (newUser) {
+      return res.status(201).json(
+        {
+          success: true,
+          data: {
+            _id: newUser.id,
+            name: newUser.name,
+            username: newUser.username,
+            isAdmin: newUser.isAdmin,
+            token: getToken(newUser),
+          }
         }
-      }
-    );
-  } else {
-    res.state(201).json({ success : false,  message: 'Invalid User Data.' });
+      );
+    }
   }
+  return res.status(201).json({ success: false, message: 'Invalid User Data.' });
+
 });
 
 // router.get('/createadmin', async (req, res) => {
