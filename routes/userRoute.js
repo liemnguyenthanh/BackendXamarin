@@ -24,6 +24,16 @@ const router = express.Router();
 //   }
 // });
 
+router.get('/findall', async (req, res) => {
+
+  const signinUser = await User.find();
+
+  return  res.status(201).json({
+    success: true,
+    signinUser
+  });
+  
+});
 router.post('/signin', async (req, res) => {
 
   const signinUser = await User.findOne({
@@ -34,7 +44,7 @@ router.post('/signin', async (req, res) => {
   if (signinUser) {
     res.status(201).json({
       success: true,
-      data: {
+      user: {
         _id: signinUser.id,
         name: signinUser.name,
         username: signinUser.username,

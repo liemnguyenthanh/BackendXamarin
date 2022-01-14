@@ -81,6 +81,8 @@ router.put('/:id', isAuth, isAdmin, async (req, res) => {
     product.name = req.body.name;
     product.price = req.body.price;
     product.image = req.body.image;
+    product.color = req.body.color;
+    product.sizes = req.body.sizes;
     product.category = req.body.category;
     product.description = req.body.description;
     const updatedProduct = await product.save();
@@ -107,9 +109,11 @@ router.post('/',  async (req, res) => {
   const product = new Product({
     name: req.body.name,
     price: req.body.price,
+    color: req.body.color,
     image: req.body.image,
     category: req.body.category,
     description: req.body.description,
+    sizes : req.body.sizes
   });
   const newProduct = await product.save();
   if (newProduct) {
